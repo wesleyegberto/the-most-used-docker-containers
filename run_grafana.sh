@@ -1,1 +1,2 @@
-docker run --rm -it --name grafana --net=host -p 3000:3000 grafana/grafana
+# Linux: add --net=host
+docker run --rm -it --name grafana -p 3000:3000 grafana/grafana
