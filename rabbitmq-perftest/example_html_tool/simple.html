@@ -1,0 +1,78 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "https://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>RabbitMQ Performance</title>
+    <link href="static/perf.css" rel="stylesheet" type="text/css">
+    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="../lib/excanvas.min.js"></script><![endif]-->
+    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
+	<script language="javascript" type="text/javascript" src="static/perf.js"></script>
+	
+    <script language="javascript" type="text/javascript">
+    $(document).ready(function() {
+      var main_results;
+        $.ajax({
+            url: 'perf-result.js',
+            success: function(data) {
+                render_graphs(JSON.parse(data));
+            },
+            fail: function() { alert('error loading publish-consume-result.js'); }
+        });
+    });
+    </script>
+</head>
+<body>
+	<h1>RabbitMQ Performance</h1>
+	
+	<div>
+		<div class="summary"
+			data-scenario="my-test-scenario"></div>
+	</div>
+
+    <div>
+		<h3>Consume Rate vs Latency</h3>
+		<div class="chart"
+			data-type="time"
+			data-latency="true"
+			data-x-axis="time (s)"
+			data-y-axis="rate (msg/s)"
+			data-y-axis2="latency (μs)"
+			data-scenario="my-test-scenario"></div>
+	</div>
+
+	<div>
+		<h3>Messages Sizes and Producers</h3>
+		<div class="chart"
+			data-type="series"
+			data-scenario="message-sizes-and-producers"
+			data-x-key="producerCount"
+			data-x-axis="producers"
+			data-y-axis="rate (msg/s)"
+			data-plot-key="send-msg-rate"
+			data-series-key="minMsgSize"></div>
+	</div>
+
+	<div>
+		<h3>Sending Rate vs Message Size</h3>
+		<div class="chart"
+			data-type="x-y"
+			data-scenario="message-sizes-large"
+			data-x-key="minMsgSize"
+			data-plot-keys="send-msg-rate send-bytes-rate"
+			data-x-axis="message size (bytes)"
+			data-y-axis="rate (msg/s)"
+			data-y-axis2="rate (bytes/s)"
+			data-legend="ne"></div>
+	</div>
+
+	<div>
+		<h3>Rate vs Latency</h3>
+		<div class="chart"
+			data-type="r-l"
+			data-x-axis="rate attempted (msg/s)"
+			data-y-axis="rate (msg/s)"
+			data-scenario="rate-vs-latency"></div>
+	</div>
+</body>
+</html>
